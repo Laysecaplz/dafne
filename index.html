@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuestro Aniversario ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#ff758c,#ff7eb3);
+    color:white;
+    text-align:center;
+    overflow-x:hidden;
+}
+
+.hero{
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.hero h1{
+    font-size:2.8rem;
+    animation:fadeIn 2s;
+}
+
+.hero p{
+    margin-top:10px;
+    font-size:1.1rem;
+}
+
+.heart{
+    font-size:60px;
+    animation:beat 1s infinite;
+}
+
+.counter{
+    margin-top:25px;
+    font-size:1.4rem;
+    font-weight:bold;
+}
+
+.gallery{
+    padding:40px 20px;
+}
+
+.gallery h2{
+    margin-bottom:20px;
+}
+
+.photos{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:15px;
+}
+
+.photos img{
+    width:100%;
+    border-radius:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,.3);
+    transition:.3s;
+}
+
+.photos img:hover{
+    transform:scale(1.05);
+}
+
+.message{
+    padding:40px 20px;
+}
+
+.message p{
+    max-width:700px;
+    margin:auto;
+    line-height:1.8;
+}
+
+.btn{
+    margin-top:25px;
+    background:white;
+    color:#ff4f81;
+    border:none;
+    padding:15px 25px;
+    border-radius:50px;
+    font-size:1rem;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+footer{
+    padding:30px;
+}
+
+@keyframes beat{
+    50%{
+        transform:scale(1.2);
+    }
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+</style>
+</head>
+<body>
+
+<section class="hero">
+
+<div class="heart">❤️</div>
+
+<h1>Feliz Aniversario Mi Amor</h1>
+
+<p>Cada día contigo es mi favorito.</p>
+
+<div class="counter" id="counter"></div>
+
+<button class="btn" onclick="playMusic()">
+🎵 Reproducir Nuestra Canción
+</button>
+
+</section>
+
+<section class="gallery">
+
+<h2>Nuestros Recuerdos</h2>
+
+<div class="photos">
+
+ <img src="./foto1.jpg" alt="foto1">
+<img src="./foto2.jpg" alt="foto2">
+<img src="./foto3.jpg" alt="foto3">
+<img src="./foto4.jpg" alt="foto4">
+<img src="./foto5.jpg" alt="foto5">
+<img src="./foto6.jpg" alt="foto6">
+
+</div>
+
+</section>
+
+<section class="message">
+
+<h2>Para Ti ❤️</h2>
+
+<p>
+Gracias por cada sonrisa, cada abrazo y cada momento compartido.
+Eres la mejor parte de mi historia y deseo seguir construyendo recuerdos
+contigo por muchos años más.
+Te amo infinitamente.
+</p>
+
+</section>
+
+<footer>
+❤️ Nuestro Amor Sigue Creciendo ❤️
+</footer>
+
+<audio id="music">
+    <source src="cancion.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+function playMusic(){
+    document.getElementById("music").play();
+}
+
+const startDate = new Date("2022-06-01");
+
+function updateCounter(){
+
+    const today = new Date();
+
+    const diff = today - startDate;
+
+    const days = Math.floor(diff / (1000*60*60*24));
+
+    document.getElementById("counter").innerHTML =
+        `Llevamos juntos <br><strong>${days}</strong> días ❤️`;
+}
+
+updateCounter();
+
+</script>
+
+</body>
+</html>
