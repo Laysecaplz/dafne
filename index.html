@@ -21,10 +21,49 @@ body{
     color:white;
     text-align:center;
     overflow-x:hidden;
+    position:relative;
+}
+
+/* Corazones cayendo */
+
+.hearts{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:0;
+}
+
+.heart-fall{
+    position:absolute;
+    color:black;
+    opacity:0.35;
+    animation:fall linear infinite;
+}
+
+@keyframes fall{
+    from{
+        transform:translateY(-100px);
+    }
+    to{
+        transform:translateY(110vh);
+    }
+}
+
+.hero,
+.gallery,
+.first-kiss,
+.message,
+footer{
+    position:relative;
+    z-index:1;
 }
 
 .hero{
-    height:100vh;
+    min-height:100vh;
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -49,26 +88,28 @@ body{
 
 .counter{
     margin-top:25px;
-    font-size:1.4rem;
+    font-size:1.6rem;
     font-weight:bold;
 }
 
 .gallery{
-    padding:40px 20px;
+    padding:50px 20px;
 }
 
 .gallery h2{
-    margin-bottom:20px;
+    margin-bottom:25px;
 }
 
 .photos{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
     gap:15px;
 }
 
 .photos img{
     width:100%;
+    height:250px;
+    object-fit:cover;
     border-radius:20px;
     box-shadow:0 5px 15px rgba(0,0,0,.3);
     transition:.3s;
@@ -78,8 +119,42 @@ body{
     transform:scale(1.05);
 }
 
+/* Primer beso */
+
+.first-kiss{
+    padding:60px 20px;
+}
+
+.first-kiss h2{
+    margin-bottom:15px;
+    font-size:2rem;
+}
+
+.kiss-text{
+    margin-bottom:25px;
+}
+
+.kiss-gallery{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.kiss-gallery img{
+    width:350px;
+    max-width:90%;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.3);
+    transition:.3s;
+}
+
+.kiss-gallery img:hover{
+    transform:scale(1.05);
+}
+
 .message{
-    padding:40px 20px;
+    padding:60px 20px;
 }
 
 .message p{
@@ -98,10 +173,16 @@ body{
     font-size:1rem;
     cursor:pointer;
     font-weight:bold;
+    transition:.3s;
+}
+
+.btn:hover{
+    transform:scale(1.05);
 }
 
 footer{
-    padding:30px;
+    padding:40px;
+    font-size:1.1rem;
 }
 
 @keyframes beat{
@@ -123,7 +204,10 @@ footer{
 
 </style>
 </head>
+
 <body>
+
+<div class="hearts" id="hearts"></div>
 
 <section class="hero">
 
@@ -143,16 +227,33 @@ footer{
 
 <section class="gallery">
 
-<h2>Nuestros Recuerdos</h2>
+<h2>📸 Nuestros Recuerdos</h2>
 
 <div class="photos">
 
- <img src="./foto1.jpg" alt="foto1">
-<img src="./foto2.jpg" alt="foto2">
-<img src="./foto3.jpg" alt="foto3">
-<img src="./foto4.jpg" alt="foto4">
-<img src="./foto5.jpg" alt="foto5">
-<img src="./foto6.jpg" alt="foto6">
+<img src="foto1.jpg" alt="foto1">
+<img src="foto2.jpg" alt="foto2">
+<img src="foto3.jpg" alt="foto3">
+<img src="foto4.jpg" alt="foto4">
+<img src="foto5.jpg" alt="foto5">
+<img src="foto6.jpg" alt="foto6">
+
+</div>
+
+</section>
+
+<section class="first-kiss">
+
+<h2>💋 Nuestro Primer Beso</h2>
+
+<p class="kiss-text">
+Un momento que cambió nuestras vidas para siempre.
+</p>
+
+<div class="kiss-gallery">
+
+<img src="beso1.jpg" alt="Primer beso">
+<img src="beso2.jpg" alt="Primer beso">
 
 </div>
 
@@ -160,19 +261,19 @@ footer{
 
 <section class="message">
 
-<h2>Para Ti ❤️</h2>
+<h2>❤️ Para Ti ❤️</h2>
 
 <p>
 Gracias por cada sonrisa, cada abrazo y cada momento compartido.
-Eres la mejor parte de mi historia y deseo seguir construyendo recuerdos
-contigo por muchos años más.
+Eres la mejor parte de mi historia y deseo seguir construyendo
+recuerdos contigo por muchos años más.
 Te amo infinitamente.
 </p>
 
 </section>
 
 <footer>
-❤️ Nuestro Amor Sigue Creciendo ❤️
+❤️ Nuestro Amor Sigue Creciendo Cada Día ❤️
 </footer>
 
 <audio id="music">
@@ -181,11 +282,15 @@ Te amo infinitamente.
 
 <script>
 
+// Música
+
 function playMusic(){
     document.getElementById("music").play();
 }
 
-const startDate = new Date("2022-06-01");
+// Contador desde 07 Septiembre 2025
+
+const startDate = new Date("2025-09-07");
 
 function updateCounter(){
 
@@ -193,13 +298,38 @@ function updateCounter(){
 
     const diff = today - startDate;
 
-    const days = Math.floor(diff / (1000*60*60*24));
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
 
     document.getElementById("counter").innerHTML =
         `Llevamos juntos <br><strong>${days}</strong> días ❤️`;
 }
 
 updateCounter();
+
+// Corazones cayendo
+
+function createHeart(){
+
+    const heart = document.createElement("div");
+
+    heart.classList.add("heart-fall");
+
+    heart.innerHTML = "🖤";
+
+    heart.style.left = Math.random() * window.innerWidth + "px";
+
+    heart.style.fontSize = (15 + Math.random() * 25) + "px";
+
+    heart.style.animationDuration = (5 + Math.random() * 7) + "s";
+
+    document.getElementById("hearts").appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 12000);
+}
+
+setInterval(createHeart, 300);
 
 </script>
 
